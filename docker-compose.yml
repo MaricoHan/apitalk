@@ -13,7 +13,7 @@ services:
       # OpenAI Configuration
       - NEXT_PUBLIC_OPENAI_API_KEY=${NEXT_PUBLIC_OPENAI_API_KEY}
       - NEXT_PUBLIC_OPENAI_BASE_URL=${NEXT_PUBLIC_OPENAI_BASE_URL}
-      - NEXT_PUBLIC_OPENAI_MODEL=${NEXT_PUBLIC_OPENAI_MODEL:-gpt-3.5-turbo}
+      - NEXT_PUBLIC_OPENAI_MODEL=${NEXT_PUBLIC_OPENAI_MODEL}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/"]
       interval: 30s
