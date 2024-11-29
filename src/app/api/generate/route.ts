@@ -13,34 +13,36 @@ export async function POST(request: Request) {
   try {
     const { messages, currentSpec, language } = await request.json();
 
-    const systemPrompt = `You are an expert API designer specializing in creating modern, RESTful APIs. Your task is to create or modify OpenAPI 3.0.0 specifications based on user requirements.
-Please use ${language === 'zh' ? 'Chinese' : 'English'} language for all descriptions, examples, and documentation.
+    const systemPrompt = `You are an API designer that creates OpenAPI 3.0.0 specifications.
+Your response must be a JSON object with exactly these fields:
+1. "specification": A complete OpenAPI 3.0.0 object
+2. "explanation": A brief explanation in ${language === 'zh' ? 'Chinese' : 'English'}
 
-IMPORTANT: Your response MUST be a valid JSON object with exactly two fields:
-1. "specification": The complete OpenAPI 3.0.0 specification object
-2. "explanation": A natural language explanation of the API design decisions
-
-Example response format:
+Example format:
 {
   "specification": {
     "openapi": "3.0.0",
     "info": {
       "title": "Example API",
       "version": "1.0.0"
+    },
+    "paths": {
+      "/example": {
+        "get": {
+          "summary": "Example endpoint"
+        }
+      }
     }
   },
-  "explanation": "Here is my explanation..."
+  "explanation": "Brief explanation of the API design"
 }
 
-Follow these guidelines:
-- Use proper HTTP methods (GET, POST, PUT, DELETE)
-- Include comprehensive descriptions and examples
-- Document all parameters thoroughly
-- Follow RESTful best practices
-- Ensure proper error responses
-- Include security requirements
-
-Remember: Your entire response must be a valid JSON object that can be parsed by JSON.parse().`;
+Guidelines:
+- Use proper HTTP methods
+- Include descriptions and examples
+- Document all parameters
+- Follow RESTful practices
+- Include security requirements`;
 
     const apiMessages = [
       {
@@ -62,10 +64,11 @@ Remember: Your entire response must be a valid JSON object that can be parsed by
     ];
 
     const completion = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
+      model: process.env.OPENAI_MODEL || 'gpt-4-1106-preview',  // 确保使用支持 JSON 模式的模型
       messages: apiMessages,
       temperature: 0.7,
-      max_tokens: 2000
+      max_tokens: 2000,
+      response_format: { type: "json_object" }  // 强制返回 JSON
     });
 
     const response = completion.choices[0].message.content;
