@@ -59,7 +59,7 @@ Remember: Your entire response must be a valid JSON object that can be parsed by
     ];
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
       messages: apiMessages,
       temperature: 0.7,
       max_tokens: 2000
