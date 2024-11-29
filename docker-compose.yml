@@ -11,9 +11,9 @@ services:
       - "3000:3000"
     environment:
       # OpenAI Configuration
-      - NEXT_PUBLIC_OPENAI_API_KEY=${NEXT_PUBLIC_OPENAI_API_KEY}
-      - NEXT_PUBLIC_OPENAI_BASE_URL=${NEXT_PUBLIC_OPENAI_BASE_URL}
-      - NEXT_PUBLIC_OPENAI_MODEL=${NEXT_PUBLIC_OPENAI_MODEL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - OPENAI_MODEL=${OPENAI_MODEL}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/"]
       interval: 30s

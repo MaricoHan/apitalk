@@ -36,9 +36,9 @@ cp .env.example .env
 ```
 Edit `.env` and add your OpenAI API credentials:
 ```
-NEXT_PUBLIC_OPENAI_API_KEY=your_api_key_here
-NEXT_PUBLIC_OPENAI_BASE_URL=your_base_url_here
-NEXT_PUBLIC_OPENAI_MODEL=gpt-3.5-turbo
+OPENAI_API_KEY=your_api_key_here
+OPENAI_BASE_URL=your_base_url_here
+OPENAI_MODEL=gpt-3.5-turbo
 ```
 
 4. Start the development server
@@ -74,9 +74,9 @@ docker-compose up --build -d
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| NEXT_PUBLIC_OPENAI_API_KEY | Your OpenAI API key | Yes |
-| NEXT_PUBLIC_OPENAI_BASE_URL | OpenAI API base URL | Yes |
-| NEXT_PUBLIC_OPENAI_MODEL | OpenAI model to use | Yes |
+| OPENAI_API_KEY | Your OpenAI API key | Yes |
+| OPENAI_BASE_URL | OpenAI API base URL | Yes |
+| OPENAI_MODEL | OpenAI model to use | Yes |
 
 ## Commands
 
