@@ -4,6 +4,9 @@ import { dump } from 'js-yaml';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  baseURL: process.env.OPENAI_BASE_URL,
+  defaultQuery: {},
+  timeout: 30000,
 });
 
 export async function POST(request: Request) {
@@ -89,10 +92,25 @@ Remember: Your entire response must be a valid JSON object that can be parsed by
     }
 
   } catch (error: any) {
-    console.error('Error generating API specification:', error);
+    console.error('Error generating API specification:', {
+      message: error.message,
+      status: error.status,
+      type: error.type,
+      code: error.code,
+      param: error.param,
+      details: error.error,
+    });
+
     return NextResponse.json(
-      { error: error.message || 'Failed to generate API specification' },
-      { status: 500 }
+      {
+        error: error.message,
+        details: {
+          status: error.status,
+          type: error.type,
+          code: error.code,
+        }
+      },
+      { status: error.status || 500 }
     );
   }
 }
